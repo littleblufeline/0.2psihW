@@ -7,7 +7,6 @@ import io
 import os
 import random
 from aiohttp.hdrs import LINK
-import requests
 import time
 import urllib.parse
 from datetime import datetime, timedelta
