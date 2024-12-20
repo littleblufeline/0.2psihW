@@ -17,8 +17,6 @@ from discord import guild
 from discord.ext import commands
 from discord.ext.commands import Bot
 
-from keep_alive import keep_alive
-
 intents = discord.Intents.default()
 intents.message_content = True
 intents.presences = True
@@ -179,7 +177,5 @@ async def on_member_join(member):
     inline = False
   )
   await channel.send(f'{member.mention}', embed=embed)
-
-keep_alive()
 
 bot.run(os.environ["DISCORD_TOKEN"])
