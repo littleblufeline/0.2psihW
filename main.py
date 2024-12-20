@@ -1,5 +1,4 @@
 # This example requires the 'message_content' privileged intents
-
 import aiohttp
 import asyncio
 import datetime
@@ -57,67 +56,81 @@ async def tpnl(ctx):
       category = discord.utils.get(guild.categories, name="TICKETS")
       if not category:
         category = await guild.create_category("TICKETS")
-      ticket_channel = await category.create_text_channel(f"{interaction.user.name}-management")
-      await ticket_channel.set_permissions(interaction.user, read_messages=True, send_messages=True, embed_links=True, attach_files=True)
+      mgmt_ticket_channel = await category.create_text_channel(f"{interaction.user.name}-management")
+      await mgmt_ticket_channel.set_permissions(interaction.user, read_messages=True, send_messages=True, embed_links=True, attach_files=True)
       ticket_support_role1 = discord.utils.get(guild.roles, name="MSRPC | High Ranks")
       ticket_support_role2 = discord.utils.get(guild.roles, name='MSRPC | Super High Ranks')
-      await ticket_channel.set_permissions(ticket_support_role1, read_messages=True, send_messages=True, embed_links=True, attach_files=True)
-      await ticket_channel.set_permissions(guild.default_role, read_messages=False)
-      OpenEmbed = discord.Embed(
+      await mgmt_ticket_channel.set_permissions(ticket_support_role1, read_messages=True, send_messages=True, embed_links=True, attach_files=True)
+      await mgmt_ticket_channel.set_permissions(guild.default_role, read_messages=False)
+      ManagementOpenEmbed = discord.Embed(
         title = 'New Management Ticket!',
         description = f'Ticket created by {interaction.user.mention}',
         color = discord.Color.green()
       )
-      OpenEmbed.add_field(
+      ManagementOpenEmbed.add_field(
         name = 'Please state your problem while you wait for staff to respond!',
         value = '',
         inline = False
       )
       ticket_id = ticket_channel.id
       await interaction.response.send_message(f"Ticket created! <#{ticket_id}>", ephemeral=True)
-        
+
+      class ManagementTicketClose(discord.ui.View):
+        def __init__(self):
+          super().__init__(timeout=None)
+          
+        @discord.ui.button(label="Close Ticket", style=discord.ButtonStyle.red, custom_id="close_mgmt_ticket")
+        async def close_mgmt_ticket(self, interaction: discord.Interaction, button: discord.ui.Button):
+          if interaction.user.id == 770484893657333761:
+            await interaction.response.send_message("Ticket closed!", ephemeral=True)
+            await mgmt_ticket_channel.edit(name = f'closed-{interaction.user.name}-mgmt')
+            await mgmt_ticket_channel.set_permissions(interaction.user, read_messages=False, send_messages=False, embed_links=False, attach_files = False)
+          else:
+            await interaction.response.send_message("You do not have permission to close this ticket!", ephemeral=True)
+      await mgmt_ticket_channel.send('@everyone', embed=OpenEmbed, view=ManagementTicketClose())
+    
     @discord.ui.button(label="General Ticket", style=discord.ButtonStyle.green, custom_id="create_gen_ticket")
     async def create_gen_ticket(self, interaction: discord.Interaction, button: discord.ui.Button):
       guild = interaction.guild
       category = discord.utils.get(guild.categories, name="TICKETS")
       if not category:
         category = await guild.create_category("TICKETS")
-      ticket_channel = await category.create_text_channel(f"{interaction.user.name}-general")
-      await ticket_channel.set_permissions(interaction.user, read_messages=True, send_messages=True, embed_links=True, attach_files=True)
+      gen_ticket_channel = await category.create_text_channel(f"{interaction.user.name}-general")
+      await gen_ticket_channel.set_permissions(interaction.user, read_messages=True, send_messages=True, embed_links=True, attach_files=True)
       ticket_support_role1 = discord.utils.get(guild.roles, name="MSRPC | High Ranks")
       ticket_support_role2 = discord.utils.get(guild.roles, name='MSRPC | Super High Ranks')
       ticket_support_role3 = discord.utils.get(guild.role, name='MSRPC | Middle Ranks')
-      await ticket_channel.set_permissions(ticket_support_role1, read_messages=True, send_messages=True, embed_links=True, attach_files=True)
-      await ticket_channel.set_permissions(ticket_support_role2, read_messages=True, send_messages=True, embed_links=True, attach_files=True)
-      await ticket_channel.set_permissions(ticket_support_role3, read_messages=True, send_messages=True, embed_links=True, attach_files=True)
-      await ticket_channel.set_permissions(guild.default_role, read_messages=False)
-      OpenEmbed = discord.Embed(
+      await gen_ticket_channel.set_permissions(ticket_support_role1, read_messages=True, send_messages=True, embed_links=True, attach_files=True)
+      await gen_ticket_channel.set_permissions(ticket_support_role2, read_messages=True, send_messages=True, embed_links=True, attach_files=True)
+      await gen_ticket_channel.set_permissions(ticket_support_role3, read_messages=True, send_messages=True, embed_links=True, attach_files=True)
+      await gen_ticket_channel.set_permissions(guild.default_role, read_messages=False)
+      GeneralOpenEmbed = discord.Embed(
         title = 'New General Ticket!',
         description = f'Ticket created by {interaction.user.mention}',
         color = discord.Color.green()
       )
-      OpenEmbed.add_field(
+      GeneralOpenEmbed.add_field(
         name = 'Please state your problem while you wait for staff to respond!',
         value = '',
         inline = False
       )
-      ticket_id = ticket_channel.id
-      await interaction.response.send_message(f"Ticket created! <#{ticket_id}>", ephemeral=True)
+      general_ticket_id = gen_ticket_channel.id
+      await interaction.response.send_message(f"Ticket created! <#{general_ticket_id}>", ephemeral=True)
         
         
-      class TicketClose(discord.ui.View):
+      class GeneralTicketClose(discord.ui.View):
         def __init__(self):
           super().__init__(timeout=None)
           
-        @discord.ui.button(label="Close Ticket", style=discord.ButtonStyle.red, custom_id="close_ticket")
-        async def close_ticket(self, interaction: discord.Interaction, button: discord.ui.Button):
+        @discord.ui.button(label="Close Ticket", style=discord.ButtonStyle.red, custom_id="close_gen_ticket")
+        async def close_gen_ticket(self, interaction: discord.Interaction, button: discord.ui.Button):
           if interaction.user.id == 770484893657333761:
             await interaction.response.send_message("Ticket closed!", ephemeral=True)
-            await ticket_channel.edit(name = f'closed-{interaction.user.name}')
-            await ticket_channel.set_permissions(interaction.user, read_messages=False, send_messages=False, embed_links=False, attach_files = False)
+            await gen_ticket_channel.edit(name = f'closed-{interaction.user.name}-gen')
+            await gen_ticket_channel.set_permissions(interaction.user, read_messages=False, send_messages=False, embed_links=False, attach_files = False)
           else:
             await interaction.response.send_message("You do not have permission to close this ticket!", ephemeral=True)
-      await ticket_channel.send('@everyone', embed=OpenEmbed, view=TicketClose())
+      await gen_ticket_channel.send('@everyone', embed=OpenEmbed, view=GeneralTicketClose())
   # Panel Embed
   embed = discord.Embed(
     title = 'Ticket Panel',
