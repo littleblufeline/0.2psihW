@@ -179,6 +179,7 @@ async def remb(ctx):
 @bot.command()
 async def log(ctx):
   questions = [
+    "What is your timezone? (GMT/EST/AEST)"
     "What is the event start time? (Format: MM/DD/YY HH:MM AM/PM)",
     "What is the event end time? (Format: MM/DD/YY HH:MM AM/PM)",
     "How many attendees were present?",
@@ -201,25 +202,26 @@ async def log(ctx):
 
   try:
     # Parse start and end times
-    start_time = datetime.strptime(answers[0], "%m/%d/%y %I:%M %p")
-    end_time = datetime.strptime(answers[1], "%m/%d/%y %I:%M %p")
+    start_time = datetime.strptime(answers[1], "%m/%d/%y %I:%M %p")
+    end_time = datetime.strptime(answers[2], "%m/%d/%y %I:%M %p")
 
     # Calculate duration in minutes
     duration = int((end_time - start_time).total_seconds() / 60)
 
     # Collect other details
-    attendees = int(answers[2])
-    passers = int(answers[3])
-    passers_names = answers[4]
+    timezone = int(answers[0])
+    attendees = int(answers[3])
+    passers = int(answers[4])
+    passers_names = answers[5]
 
     # Generate the log message
     log_message = (
       "```"
-      f"Host: <@770484893657333761>\n"
+      f"Host: <@{ctx.author.id}>\n"
       f"Event Type: BMT\n"
-      f"Timezone: EST\n"
-      f"Event Start Time: {answers[0]}\n"
-      f"Event End Time: {answers[1]}\n"
+      f"Timezone: {timezone}\n"
+      f"Event Start Time: {answers[1]}\n"
+      f"Event End Time: {answers[2]}\n"
       f"Event Duration: {duration} minutes\n"
       f"Attendees: {attendees}\n"
       f"Passers: {passers}\n"
@@ -230,7 +232,7 @@ async def log(ctx):
     )
 
     # Send the log message
-    await ctx.send(log_message)
+    await ctx.send("All you need to do is include you start and end screenshot when sending it to <#960314396763127909>\n" + log_message)
 
   except ValueError:
     await ctx.send("Invalid date format. Please use 'MM/DD/YY HH:MM AM/PM' for times.")
