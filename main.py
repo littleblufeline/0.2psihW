@@ -179,12 +179,12 @@ async def remb(ctx):
 @bot.command()
 async def log(ctx):
   questions = [
-    "What is your timezone? (GMT/EST/AEST)"
+    "What is your timezone? (GMT/EST/AEST)",
     "What is the event start time? (Format: MM/DD/YY HH:MM AM/PM)",
     "What is the event end time? (Format: MM/DD/YY HH:MM AM/PM)",
     "How many attendees were present?",
     "How many passers were there?",
-    "What are the names of the passers? (Separate names with commas)",
+    "What are the names of the passers? (Separate names with commas)"
   ]
   answers = []
 
