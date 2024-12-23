@@ -20,7 +20,7 @@ intents.message_content = True
 intents.presences = True
 intents.members = True
 
-bot = commands.Bot(
+bot = commands.AutoShardedBot(
   intents = intents,
   command_prefix='!'
 )
@@ -39,6 +39,7 @@ async def on_ready():
   )
   print(f"Logged into {bot.user}")
   print(f"Bot Id: {bot.user.id}")
+  print(f'Shards: {bot.shard_count}')
   print("Registered commands:")
   for command in bot.commands:
     print(f"- {command.name}")
@@ -402,5 +403,13 @@ async def on_member_join(member):
     inline = False
   )
   await channel.send(f'{member.mention}', embed=embed)
+
+@bot.event
+async def on_shard_ready(shard_id):
+  print(f"Shard {shard_id} is ready.")
+
+@bot.event
+async def on_shard_disconnect(shard_id):
+  print(f"Shard {shard_id} disconnected.")
 
 bot.run(os.environ["DISCORD_TOKEN"])
