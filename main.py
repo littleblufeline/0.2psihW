@@ -39,6 +39,10 @@ async def on_ready():
   )
   print(f"Logged into {bot.user}")
   print(f"Bot Id: {bot.user.id}")
+  print("Registered commands:")
+  for command in bot.commands:
+    print(f"- {command.name}")
+
 
 ##############################################################################################################################################
 
