@@ -209,7 +209,7 @@ async def log(ctx):
     duration = int((end_time - start_time).total_seconds() / 60)
 
     # Collect other details
-    timezone = int(answers[0])
+    timezone = answers[0]
     attendees = int(answers[3])
     passers = int(answers[4])
     passers_names = answers[5]
