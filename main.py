@@ -193,11 +193,9 @@ async def log(ctx):
 
   for question in questions:
     await ctx.send(question)
-    await ctx.message.delete()
     try:
       msg = await bot.wait_for('message', timeout=60.0, check=check)
       answers.append(msg.content)
-      await ctx.message.delete()
     except asyncio.TimeoutError:
       await ctx.send("You took too long to respond! Please try again.")
       return
@@ -235,6 +233,7 @@ async def log(ctx):
 
     # Send the log message
     await ctx.send("All you need to do is include you start and end screenshot when sending it to <#960314396763127909>\n" + log_message)
+    await ctx.message.delete()
 
   except ValueError:
     await ctx.send("Invalid date format. Please use 'MM/DD/YY HH:MM AM/PM' for times.")
