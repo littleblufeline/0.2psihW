@@ -301,6 +301,84 @@ async def intro(ctx):
   )
   await ctx.message.delete()
 
+@bot.command()
+async def drills(ctx):
+  drills_embed = discord.Embed(
+    title = 'Phase 2 - Drill Commands',
+    description = 'Below you can find each message you need to send to complete the drill commands phase.',
+    color = discord.Color.green()
+  )
+  drills_embed.add_field(
+    name = '',
+    value = '```I WILL NOW GO OVER THE DRILLS.```',
+    inline = False
+  )
+  drills_embed.add_field(
+    name = '',
+    value = '```THESE WILL BE VALUABLE FOR YOUR ENDEAVOURS WITHIN THE BRITISH ARMY.```',
+    inline = False
+  )
+  drills_embed.add_field(
+    name = '',
+    value = '```YOU MUST WATCH ME BUT DO NOT COPY ME.```',
+    inline = False
+  )
+  drills_embed.add_field(
+    name = '',
+    value = '```LEFT, TURN! - THIS IS A 90 DEGREE TURN TO YOUR LEFT FROM YOUR CURRENT POSITION.```',
+    inline = False
+  )
+  drills_embed.add_field(
+    name = '',
+    value = '```LEFT, INCLINE! - THIS IS A 45 DEGREE INCLINE TO YOUR LEFT FROM YOUR CURRENT POSITION.```',
+    inline = False
+  )
+  drills_embed.add_field(
+    name = '',
+    value = '```ABOUT, TURN! - THIS IS A 180 DEGREE TURN. YOU WILL FACE THE OPPOSITE DIRECTION THAT YOU CURRENTLY ARE.```',
+    inline = False
+  )
+  drills_embed.add_field(
+    name = '',
+    value = '```RIGHT, TURN! - THIS IS A 90 DEGREE TURN TO YOUR RIGHT, NO MATTER WHAT POSITION YOU ARE IN.```',
+    inline = False
+  )
+  drills_embed.add_field(
+    name = '',
+    value = '```RIGHT, INCLINE! - THIS IS A 45 DEGREE INCLINE TO YOUR RIGHT.```',
+    inline = False
+  )
+  drills_embed.add_field(
+    name = '',
+    value = '```CENTRE, TURN! - YOU MUST FACE THE DIRECTION OF THE HOST.```',
+    inline = False
+  )
+  drills_embed.add_field(
+    name = '',
+    value = '```IF THE DRILL IS SPELT INCORRECTLY OR "SQUAD," IS NOT SAID, YOU WILL NOT PERFORM THE DRILL!```',
+    inline = False
+  )
+  drills_embed.add_field(
+    name = '',
+    value = '```DOES EVERYONE UNDERSTAND THE DRILLS?```',
+    inline = False
+  )
+  drills_embed.add_field(
+    name = '',
+    value = '```YOU WILL NOW DEMONSTRATE THE DRILLS!```',
+    inline = False
+  )
+  drills_embed.add_field(
+    name = '',
+    value = '```GREAT JOB ON THE DRILLS!```',
+    inline = False
+  )
+  drills_embed.add_field(
+    name = '',
+    value = '```' + 'IT IS TIME TO HEAD TO THE CLASSROOM IN ORDER TO LEARN ABOUT THE GENERAL RULES OF THE BRITISH ARMY.' + '```',
+    inline = False
+  )
+
 ############################################################################################################################################
 
 # Welcomer
