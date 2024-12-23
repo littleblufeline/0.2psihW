@@ -172,6 +172,39 @@ async def remb(ctx):
   await ctx.send('# Coming soon bc im too lazy 🤑', embed=RuleEmbed, view=VerifyButton())
   await ctx.message.delete(delay=0)
 
+@bot.command()
+async def log(ctx, start_time: str, end_time: str, attendees: int, passers: int, *, passers_names: str):
+  try:
+    # Parse the start and end times
+    start = datetime.strptime(start_time, "%m/%d/%y %I:%M %p")
+    end = datetime.strptime(end_time, "%m/%d/%y %I:%M %p")
+
+    # Calculate duration in minutes
+    duration = int((end - start).total_seconds() / 60)
+
+    # Generate the log message
+    log_message = (
+      "```"
+      f"Host: <@770484893657333761>\n"
+      f"Event Type: BMT\n"
+      f"Timezone: EST\n"
+      f"Event Start Time: {start_time}\n"
+      f"Event End Time: {end_time}\n"
+      f"Event Duration: {duration} minutes\n"
+      f"Attendees: {attendees}\n"
+      f"Passers: {passers}\n"
+      f"Passers Names: {passers_names}\n"
+      f"RSM: <@&1114263017526407221>\n"
+      f"Proof:\n"
+      "```"
+    )
+
+    # Send the log message
+    await ctx.send(log_message)
+
+  except ValueError:
+    await ctx.send("Invalid date format. Please use 'MM/DD/YY HH:MM AM/PM' for times.")
+
 ############################################################################################################################################
 
 # Welcomer
