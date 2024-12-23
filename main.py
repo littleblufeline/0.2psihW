@@ -295,8 +295,9 @@ async def intro(ctx):
     inline = False
   )
   await ctx.send(
-    f"{ctx.author}",
-    embed = intro_embed
+    f"{ctx.author.mention}",
+    embed = intro_embed,
+    delete_after = 600
   )
   await ctx.message.delete()
 
