@@ -177,14 +177,40 @@ async def remb(ctx):
   await ctx.message.delete(delay=0)
 
 @bot.command()
-async def log(ctx, start_time: str, end_time: str, attendees: int, passers: int, *, passers_names: str):
+async def log(ctx):
+  questions = [
+    "What is the event start time? (Format: MM/DD/YY HH:MM AM/PM)",
+    "What is the event end time? (Format: MM/DD/YY HH:MM AM/PM)",
+    "How many attendees were present?",
+    "How many passers were there?",
+    "What are the names of the passers? (Separate names with commas)",
+  ]
+  answers = []
+
+  def check(m):
+    return m.author == ctx.author and m.channel == ctx.channel
+
+  for question in questions:
+    await ctx.send(question)
+    try:
+      msg = await bot.wait_for('message', timeout=60.0, check=check)
+      answers.append(msg.content)
+    except asyncio.TimeoutError:
+      await ctx.send("You took too long to respond! Please try again.")
+      return
+
   try:
-    # Parse the start and end times
-    start = datetime.strptime(start_time, "%m/%d/%y %I:%M %p")
-    end = datetime.strptime(end_time, "%m/%d/%y %I:%M %p")
+    # Parse start and end times
+    start_time = datetime.strptime(answers[0], "%m/%d/%y %I:%M %p")
+    end_time = datetime.strptime(answers[1], "%m/%d/%y %I:%M %p")
 
     # Calculate duration in minutes
-    duration = int((end - start).total_seconds() / 60)
+    duration = int((end_time - start_time).total_seconds() / 60)
+
+    # Collect other details
+    attendees = int(answers[2])
+    passers = int(answers[3])
+    passers_names = answers[4]
 
     # Generate the log message
     log_message = (
@@ -192,8 +218,8 @@ async def log(ctx, start_time: str, end_time: str, attendees: int, passers: int,
       f"Host: <@770484893657333761>\n"
       f"Event Type: BMT\n"
       f"Timezone: EST\n"
-      f"Event Start Time: {start_time}\n"
-      f"Event End Time: {end_time}\n"
+      f"Event Start Time: {answers[0]}\n"
+      f"Event End Time: {answers[1]}\n"
       f"Event Duration: {duration} minutes\n"
       f"Attendees: {attendees}\n"
       f"Passers: {passers}\n"
@@ -208,6 +234,9 @@ async def log(ctx, start_time: str, end_time: str, attendees: int, passers: int,
 
   except ValueError:
     await ctx.send("Invalid date format. Please use 'MM/DD/YY HH:MM AM/PM' for times.")
+  except Exception as e:
+    await ctx.send(f"An error occurred: {e}")
+
 
 ############################################################################################################################################
 
