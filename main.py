@@ -378,6 +378,12 @@ async def drills(ctx):
     value = '```' + 'IT IS TIME TO HEAD TO THE CLASSROOM IN ORDER TO LEARN ABOUT THE GENERAL RULES OF THE BRITISH ARMY.' + '```',
     inline = False
   )
+  await ctx.send(
+    f'{ctx.author.mention}',
+    embed = drills_embed,
+    delete_after = 600
+  )
+  await ctx.message.delete()
 
 ############################################################################################################################################
 
