@@ -195,7 +195,8 @@ async def log(ctx):
   messages_to_delete = [ctx.message]  # Start with the command message itself
   
   for question in questions:
-    await ctx.send(question)
+    bot_msg = await ctx.send(question)
+    messages_to_delete.append(bot_msg)
     try:
       msg = await bot.wait_for('message', timeout=60.0, check=check)
       answers.append(msg.content)
