@@ -191,13 +191,18 @@ async def log(ctx):
   def check(m):
     return m.author == ctx.author and m.channel == ctx.channel
 
+  # Collect the messages to delete
+  messages_to_delete = [ctx.message]  # Start with the command message itself
+  
   for question in questions:
     await ctx.send(question)
     try:
       msg = await bot.wait_for('message', timeout=60.0, check=check)
       answers.append(msg.content)
+      messages_to_delete.append(msg)
     except asyncio.TimeoutError:
-      await ctx.send("You took too long to respond! Please try again.")
+      timeout_message = await ctx.send("You took too long to respond! Please try again.")
+      messages_to_delete.append(timeout_message)
       return
 
   try:
@@ -233,7 +238,8 @@ async def log(ctx):
 
     # Send the log message
     await ctx.send("All you need to do is include you start and end screenshot when sending it to <#960314396763127909>\n" + log_message)
-    await ctx.message.delete()
+    # Delete all collected messages except the final log message
+    await ctx.channel.purge(limit=None, check=lambda m: m in messages_to_delete)
 
   except ValueError:
     await ctx.send("Invalid date format. Please use 'MM/DD/YY HH:MM AM/PM' for times.")
