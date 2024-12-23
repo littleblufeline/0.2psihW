@@ -247,6 +247,58 @@ async def log(ctx):
   except Exception as e:
     await ctx.send(f"An error occurred: {e}")
 
+@bot.command()
+async def intro(ctx):
+  intro_embed = discord.Embed(
+    title = 'Phase 1 - Introduction',
+    description = 'Below you can find each message you need to send to complete the introductory phase.',
+    color = discord.Color.green()
+  )
+  intro_embed.add_field(
+    name = '',
+    value = '```WELCOME TO YOUR BASIC MILITARY TRAINING. I, SERGEANT MAJOR, LITTLEBLUEFELINE, WILL BE YOUR INSTRUCTOR. IT IS MY JOB TO TRANSFORM YOU FROM CIVILIANS TO SOLDIERS.```',
+    inline = False
+  )
+  intro_embed.add_field(
+    name = '',
+    value = '```DURING THIS BASIC MILITARY TRAINING, YOU WILL BE EQUIPPED WITH THE KNOWLEDGE AND SKILLS TO BECOME AN ENLISTED MEMBER OF THE BRITISH ARMY.```',
+    inline = False
+  )
+  intro_embed.add_field(
+    name = '',
+    value = '```YOU ARE EXPECTED TO OBEY EVERY ORDER THAT I GIVE YOU AND WILL ONLY SPEAK WHEN GIVEN PERMISSION TO.```',
+    inline = False
+  )
+  intro_embed.add_field(
+    name = '',
+    value = ' ```YOU ARE REQUIRED TO RESPOND IMMEDIATELY TO MY QUESTIONS IN FULL CAPITAL LETTERS.```',
+    inline = False
+  )
+  intro_embed.add_field(
+    name = '',
+    value = '```IF YOU WANT TO SPEAK, YOU WILL BE REQUIRED TO SAY “PERMISSION TO SPEAK, INSTRUCTOR?”```',
+    inline = False
+  )
+  intro_embed.add_field(
+    name = '',
+    value = '```IF YOU ARE UNABLE TO FOLLOW ORDERS AT ANY POINT, YOU WILL RECEIVE A STRIKE. IF YOU RECEIVE 3 STRIKES, YOU WILL BE DISMISSED.```',
+    inline = False
+  )
+  intro_embed.add_field(
+    name = '',
+    value = '```YOU MUST ADDRESS ME AS “INSTRUCTOR”, AND “INSTRUCTOR” ONLY.```',
+    inline = False
+  )
+  intro_embed.add_field(
+    name = '',
+    value = '```AM I UNDERSTOOD?```',
+    inline = False
+  )
+  await ctx.send(
+    f"{ctx.author}",
+    embed = intro_embed
+  )
+  await ctx.message.delete()
 
 ############################################################################################################################################
 
