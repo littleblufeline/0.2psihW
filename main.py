@@ -193,9 +193,11 @@ async def log(ctx):
 
   for question in questions:
     await ctx.send(question)
+    await ctx.message.delete()
     try:
       msg = await bot.wait_for('message', timeout=60.0, check=check)
       answers.append(msg.content)
+      await ctx.message.delete()
     except asyncio.TimeoutError:
       await ctx.send("You took too long to respond! Please try again.")
       return
