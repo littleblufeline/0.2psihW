@@ -386,6 +386,38 @@ async def drills(ctx):
   )
   await ctx.message.delete()
 
+@bot.command()
+async def resroles(ctx):
+  guild = ctx.message.channel.guild
+  channel_id = ctx.message.channel.id
+  message_id = ctx.message.id
+  author_id = ctx.message.author.id
+  author = ctx.message.author.mention
+
+  if author_id == guild.owner.id:
+    in_progress_embed = discord.Embed(
+    title = 'In Progress',
+    description = 'Working on deleting all roles 👍',
+    color = discord.Color.red()
+    )
+    in_progress_embed.add_field(
+      name = 'Information',
+      value = f'Command Initiated by: {author} ({author_id})'
+    )
+    await ctx.send(embed = in_progress_embed, delete_after 600)
+    for role in guild.roles:
+      if role.is_bot_managed() or role.is_integration() or role.is_default():
+        continue
+      try:
+        await role.delete(reason = f'Role Reset, Requested & Initiated by: {author}')
+        await ctx.send(f'Role Deletion Success: Deleted {role.name}', delete_after = 10)
+      except discord.Forbidden:
+        await ctx.send(f'Unable to delete role: {role.name} (Insufficient permissions)')
+      except discord.HTTPException as e:
+        await ctx.send(f'Failed to delete role: {role.name} ({str(e)})')
+  else:
+    await ctx.reply(':warning: | Only the server owner and entrusted users may use this command!', delete_after = 10)
+
 ############################################################################################################################################
 
 # Welcomer
