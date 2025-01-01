@@ -442,7 +442,7 @@ async def reschannels(ctx):
     for channel in guild.channels:
       try:
         await channel.delete(reason = f'Channel Reset, Requested & Initiated by: {author}')
-        await ctx.send(f'Channel Deletion Success: Deleted "**{role.name}**"', delete_after = 10)
+        await ctx.send(f'Channel Deletion Success: Deleted "**{channel.name}**"', delete_after = 10)
       except discord.Forbidden:
         await ctx.send(f'Unable to delete channel: "**{channel.name}**" (Insufficient permissions)')
       except discord.HTTPException as e:
