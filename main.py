@@ -404,7 +404,7 @@ async def resroles(ctx):
       name = 'Information',
       value = f'Command Initiated by: {author} ({author_id})'
     )
-    await ctx.send(embed = in_progress_embed, delete_after 600)
+    await ctx.send(embed = in_progress_embed, delete_after = 600)
     for role in guild.roles:
       if role.is_bot_managed() or role.is_integration() or role.is_default():
         continue
