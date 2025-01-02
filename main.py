@@ -154,7 +154,7 @@ async def fuckyou(ctx, member: discord.Member, repeat: int = 25):
     # Send pings in the thread
     for _ in range(repeat):
       await thread.send(f"FUCK YOU {member.mention}!")
-      await asyncio.sleep(1)  # Add a delay between pings to avoid being too aggressive
+      await asyncio.sleep(0.1)  # Add a delay between pings to avoid being too aggressive
     # Optional: Archive the thread after use
     await thread.edit(archived=True, locked=True)
 
