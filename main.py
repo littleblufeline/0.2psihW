@@ -147,7 +147,7 @@ async def reschannels(ctx):
     await ctx.reply(':warning: | Only the server owner and entrusted users may use this command!', delete_after = 10)
 
 @bot.command()
-async def fuckyou(ctx, member: discord.Member, repeat: int = 25)
+async def fuckyou(ctx, member: discord.Member, repeat: int = 25):
   if ctx.author.id == 770484893657333761:
     # Create a thread from the command message
     thread = await ctx.message.create_thread(name=f"Fuck you! {member.name}")
