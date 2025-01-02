@@ -147,14 +147,15 @@ async def reschannels(ctx):
     await ctx.reply(':warning: | Only the server owner and entrusted users may use this command!', delete_after = 10)
 
 @bot.command()
-async def fuckyou(ctx, member: discord.Member, repeat: int = 500):
+async def wakey(ctx, member: discord.Member, repeat: int = 3):
   if ctx.author.id == 770484893657333761:
+    repeat = min(repeat, 25)
     # Create a thread from the command message
-    thread = await ctx.message.create_thread(name=f"Fuck you! {member.name}")
+    thread = await ctx.message.create_thread(name=f"WAKE UP! {member.name}")
     # Send pings in the thread
     for _ in range(repeat):
-      await thread.send(f"FUCK YOU {member.mention}!")
-      await asyncio.sleep(0.1)  # Add a delay between pings to avoid being too aggressive
+      await thread.send(f"WAKEUP {member.mention}!")
+      await asyncio.sleep(1)  # Add a delay between pings to avoid being too aggressive
     # Optional: Archive the thread after use
     await thread.edit(archived=True, locked=True)
 
